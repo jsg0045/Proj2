@@ -11,4 +11,6 @@ public class ProductModel {
         sb.append(mQuantity).append(")");
         return sb.toString();
     }
+
+
 }

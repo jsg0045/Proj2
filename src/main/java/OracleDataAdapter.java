@@ -1,3 +1,4 @@
+import java.util.List;
 
 public class OracleDataAdapter implements IDataAdapter {
     public int connect(String dbfile) {
@@ -18,17 +19,31 @@ public class OracleDataAdapter implements IDataAdapter {
         return null;
     }
     public int saveProduct(ProductModel model) {
-        return PRODUCT_SAVED_OK;
+        return PRODUCT_SAVE_OK;
     }
 
+    @Override
+    public PurchaseModel loadPurchase(int id) {
+        return null;
+    }
     @Override
     public int savePurchase(PurchaseModel model) {
         return 0;
     }
 
     @Override
-    public int saveCustomer(CustomerModel model) {
-        return 0;
+    public PurchaseListModel loadPurchaseHistory(int customerID) {
+        return null;
+    }
+
+    @Override
+    public ProductListModel searchProduct(String name, double minPrice, double maxPrice) {
+        return null;
+    }
+
+    @Override
+    public UserModel loadUser(String username) {
+        return null;
     }
 
 }
