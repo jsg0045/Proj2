@@ -86,7 +86,7 @@ public class SQLiteDataAdapter implements IDataAdapter {
         PurchaseModel purchase = null;
 
         try {
-            String sql = "SELECT PurchaseId, Name, Price, Quantity FROM Products WHERE PurchaseId = " + purchaseID;
+            String sql = "SELECT PurchaseID, CustomerID, ProductID, Price, Quantity, Cost, Tax, Total, Date FROM Purchases WHERE PurchaseId = " + purchaseID;
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
@@ -111,9 +111,15 @@ public class SQLiteDataAdapter implements IDataAdapter {
     @Override
     public int savePurchase(PurchaseModel purchase) {
         try {
-            String sql = "INSERT INTO Purchases VALUES " + purchase;
-            System.out.println(sql);
             Statement stmt = conn.createStatement();
+            PurchaseModel p = loadPurchase(purchase.mPurchaseID); // check if this product exists
+            if (p != null) {
+                stmt.executeUpdate("DELETE FROM Purchases WHERE PurchaseID = " + purchase.mPurchaseID);
+            }
+
+            String sql = "INSERT INTO Purchases(PurchaseID, ProductID, CustomerID, Price, Quantity, Cost, Tax, Total, Date) VALUES " + purchase;
+            System.out.println(sql);
+
             stmt.executeUpdate(sql);
 
         } catch (Exception e) {
@@ -131,7 +137,7 @@ public class SQLiteDataAdapter implements IDataAdapter {
     public PurchaseListModel loadPurchaseHistory(int id) {
         PurchaseListModel res = new PurchaseListModel();
         try {
-            String sql = "SELECT * FROM Purchases WHERE CustomerId = " + id;
+            String sql = "SELECT * FROM Purchases WHERE CustomerID = " + id;
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -140,7 +146,7 @@ public class SQLiteDataAdapter implements IDataAdapter {
                 purchase.mPurchaseID = rs.getInt("PurchaseID");
                 purchase.mProductID = rs.getInt("ProductID");
                 purchase.mPrice = rs.getDouble("Price");
-                purchase.mQuantity = rs.getDouble("Quantity");
+                purchase.mQuantity = rs.getInt("Quantity");
                 purchase.mCost = rs.getDouble("Cost");
                 purchase.mTax = rs.getDouble("Tax");
                 purchase.mTotal = rs.getDouble("Total");
@@ -182,7 +188,7 @@ public class SQLiteDataAdapter implements IDataAdapter {
         CustomerModel customer = null;
 
         try {
-            String sql = "SELECT * FROM Customers WHERE CustomerId = " + id;
+            String sql = "SELECT * FROM Customers WHERE CustomerID = " + id;
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
@@ -197,6 +203,28 @@ public class SQLiteDataAdapter implements IDataAdapter {
             System.out.println(e.getMessage());
         }
         return customer;
+    }
+
+    public int saveCustomer(CustomerModel product) {
+        try {
+            Statement stmt = conn.createStatement();
+            CustomerModel p = loadCustomer(product.mCustomerID); // check if this product exists
+            if (p != null) {
+                stmt.executeUpdate("DELETE FROM Customers WHERE CustomerID = " + product.mCustomerID);
+            }
+
+            String sql = "INSERT INTO Customers(CustomerID, Name, Phone, Address) VALUES " + product;
+            System.out.println(sql);
+            stmt.executeUpdate(sql);
+
+        } catch (Exception e) {
+            String msg = e.getMessage();
+            System.out.println(msg);
+            if (msg.contains("UNIQUE constraint failed"))
+                return CUSTOMER_SAVE_FAILED;
+        }
+
+        return CUSTOMER_SAVE_OK;
     }
 
     public UserModel loadUser(String username) {

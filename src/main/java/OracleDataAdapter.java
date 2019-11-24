@@ -14,6 +14,7 @@ public class OracleDataAdapter implements IDataAdapter {
     public CustomerModel loadCustomer(int id) {
         return null;
     }
+    public int saveCustomer(CustomerModel model) { return CUSTOMER_SAVE_OK; }
 
     public ProductModel loadProduct(int id) {
         return null;
@@ -28,7 +29,7 @@ public class OracleDataAdapter implements IDataAdapter {
     }
     @Override
     public int savePurchase(PurchaseModel model) {
-        return 0;
+        return PURCHASE_SAVE_OK;
     }
 
     @Override

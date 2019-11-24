@@ -1,6 +1,6 @@
 public class PurchaseModel {
-    public int mPurchaseID, mProductID, mCustomerID;
-    public double mPrice, mQuantity, mCost, mTax, mTotal;
+    public int mPurchaseID, mProductID, mCustomerID, mQuantity;
+    public double mPrice, mCost, mTax, mTotal;
     public String mDate;
 
     public String toString() {

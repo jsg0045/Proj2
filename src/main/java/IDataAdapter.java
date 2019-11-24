@@ -11,6 +11,9 @@ public interface IDataAdapter {
     public static final int PRODUCT_SAVE_OK = 0;
     public static final int PRODUCT_SAVE_FAILED = 1;
 
+    public static final int CUSTOMER_SAVE_OK = 10;
+    public static final int CUSTOMER_SAVE_FAILED = 11;
+
     public static final int PURCHASE_SAVE_OK = 500;
     public static final int PURCHASE_SAVE_FAILED = 501;
 
@@ -21,7 +24,7 @@ public interface IDataAdapter {
     public int saveProduct(ProductModel model);
 
     public CustomerModel loadCustomer(int id);
-    //    public int saveCustomer(CustomerModel model);
+    public int saveCustomer(CustomerModel model);
 //
     public PurchaseModel loadPurchase(int id);
     public int savePurchase(PurchaseModel model);

@@ -80,7 +80,7 @@ public class ManagePurchaseUI {
         view.getContentPane().add(line);
 
 
-//        btnLoad.addActionListener(new LoadButtonListerner());
+        btnLoad.addActionListener(new LoadButtonListerner());
 
         btnSave.addActionListener(new SaveButtonListener());
 
@@ -171,7 +171,7 @@ public class ManagePurchaseUI {
 
             String quant = txtQuantity.getText();
             try {
-                purchase.mQuantity = Double.parseDouble(quant);
+                purchase.mQuantity = Integer.parseInt(quant);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Quantity is invalid!");
                 return;
