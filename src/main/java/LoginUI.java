@@ -13,6 +13,8 @@ public class LoginUI {
 
     public JButton btnLogin = new JButton("Login");
     public JButton btnLogout = new JButton("Logout");
+    public JButton btnChangePass = new JButton("Change Password");
+    public JButton btnChangeName = new JButton("Change Name");
 
     public JTextField txtUsername = new JTextField(20);
     public JTextField txtPassword = new JPasswordField(20);
@@ -46,6 +48,8 @@ public class LoginUI {
 
         pane.add(btnLogin);
         pane.add(btnLogout);
+        pane.add(btnChangeName);
+        pane.add(btnChangePass);
 
         btnLogin.addActionListener(new LoginActionListener());
 
@@ -120,7 +124,7 @@ public class LoginUI {
 
 
                 user = gson.fromJson(msg.data, UserModel.class);
- //               user.mUserType = 3;
+                user.mUserType = 0;
                 System.out.println("User = " + user);
                 if (user.mUserType == UserModel.MANAGER) {
                     ManagerUI ui = new ManagerUI();
@@ -137,12 +141,12 @@ public class LoginUI {
                     ui.view.setVisible(true);
                 }
                 else if (user.mUserType == UserModel.CUSTOMER) {
-//                    CustomerUI ui = new CustomerUI(user);
-//                    System.out.println("MainUI = " + ui);
-//                    ui.view.setVisible(true);
-                    MainUI ui = new MainUI();
+                    CustomerUI ui = new CustomerUI(user);
                     System.out.println("MainUI = " + ui);
                     ui.view.setVisible(true);
+//                    MainUI ui = new MainUI();
+  //                  System.out.println("MainUI = " + ui);
+    //                ui.view.setVisible(true);
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Usertype NOT supported!");
